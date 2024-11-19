@@ -20,12 +20,16 @@ templ Content(products []ProductBody) {
 	<body>
 		<h1>Product CRUD</h1>
 		@NewProductForm()
-		<div id="products">
-			for _, p := range products {
-				@Product(p)
-			}
-		</div>
+		@ProductList(products)
 	</body>
+}
+
+templ ProductList(products []ProductBody) {
+	<div id="products">
+		for _, p := range products {
+			@Product(p)
+		}
+	</div>
 }
 
 templ NewProductForm() {
@@ -43,6 +47,7 @@ templ NewProductForm() {
 			<input type="number" class="form-control" id="price" name="price"/>
 		</div>
 		<button hx-post="/new/" hx-target="#products" hx-swap="afterend" id="new-product-btn" class="btn btn-primary">Submit</button>
+		<button hx-get="/search/" hx-target="#product-form" hx-swap="outerHTML" id="search-btn" class="btn btn-primary">Search</button>
 	</form>
 }
 
@@ -62,6 +67,17 @@ templ EditProductForm(p ProductBody) {
 		</div>
 		<button hx-post={ fmt.Sprintf("/edit/%d/", p.Id) } hx-target={ fmt.Sprintf("#produto-%d", p.Id) } hx-swap="outerHTML" class="btn btn-primary" id="edit-btn">Edit</button>
 		<button hx-get="/cancel" hx-target="#product-form" hx-swap="outerHTML" class="btn btn-primary">Cancel</button>
+	</form>
+}
+
+templ SearchForm() {
+	<form id="product-form" hx-get="/new/" hx-target="#product-form" hx-swap="outerHTML" hx-trigger="click from:#back-btn">
+		<div class="form-group">
+			<label for="id">Name</label>
+			<input type="number" class="form-control" id="id" placeholder="Enter product id" name="id"/>
+		</div>
+		<button hx-post="/search/id/" hx-target="#products" hx-swap="innerHTML" id="search-btn" class="btn btn-primary">Search</button>
+		<button hx-get="/back/" hx-target="#products" hx-swap="outerHTML" id="back-btn" class="btn btn-primary">Cancel</button>
 	</form>
 }
 

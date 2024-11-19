@@ -174,7 +174,7 @@ func ChangeFormEditHandler(w http.ResponseWriter, r *http.Request) {
 	component.Render(r.Context(), w)
 }
 
-func StartHandler(w http.ResponseWriter, r *http.Request) {
+func GetAllProducts() ([]ProductBody, error) {
 	resp, err := http.Get(BACK_ADDRESS + "/products/")
 	if err != nil {
 		panic(err)
@@ -187,14 +187,21 @@ func StartHandler(w http.ResponseWriter, r *http.Request) {
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatal("Error reading response body:", err)
+		return nil, err
 	}
 
 	var products []ProductBody
 	if err := json.Unmarshal(body, &products); err != nil {
-		log.Fatal("Error unmarshalling JSON:", err)
+		return nil, err
 	}
+	return products, nil
+}
 
+func StartHandler(w http.ResponseWriter, r *http.Request) {
+	products, err := GetAllProducts()
+	if err != nil {
+		log.Fatal("Error getting products:", err)
+	}
 	component := Page(products)
 	component.Render(r.Context(), w)
 }
@@ -208,13 +215,53 @@ func loadEnv() {
 	BACK_ADDRESS = os.Getenv("BACK_ADDRESS")
 }
 
+func SearchHandler(w http.ResponseWriter, r *http.Request) {
+	id := r.FormValue("id")
+	url := fmt.Sprintf("%s/search/%s", BACK_ADDRESS, id)
+	resp, err := http.Get(url)
+	if err != nil {
+		log.Println(err)
+		w.WriteHeader(http.StatusNoContent)
+		return
+	}
+	if resp.StatusCode != http.StatusOK {
+		w.WriteHeader(http.StatusNoContent)
+		return
+	}
+	defer resp.Body.Close()
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal("Error reading response body:", err)
+	}
+	var products []ProductBody
+	if err := json.Unmarshal(body, &products); err != nil {
+		log.Fatal("Error unmarshalling JSON:", err)
+	}
+	fmt.Println(products)
+	component := Product(products[0])
+	component.Render(r.Context(), w)
+	w.WriteHeader(http.StatusOK)
+}
+
+func BackHandler(w http.ResponseWriter, r *http.Request) {
+	products, err := GetAllProducts()
+	if err != nil {
+		log.Fatal("Error getting products:", err)
+	}
+	component := ProductList(products)
+	component.Render(r.Context(), w)
+}
+
 func main() {
 	loadEnv()
 
 	PORT := os.Getenv("PORT")
 	http.HandleFunc("DELETE /delete/{id}/", DeleteHandler)
 	http.HandleFunc("GET /cancel/", CancelHandler)
+	http.HandleFunc("GET /back/", BackHandler)
 	http.HandleFunc("POST /edit/{id}/", EditHandler)
+	http.Handle("GET /search/", templ.Handler(SearchForm()))
+	http.HandleFunc("POST /search/id/", SearchHandler)
 	http.HandleFunc("GET /edit-product/{id}/{name}/{description}/{price}/", ChangeFormEditHandler)
 	http.HandleFunc("POST /new/", NewProductHandler)
 
