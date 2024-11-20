@@ -237,8 +237,17 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 	if err := json.Unmarshal(body, &products); err != nil {
 		log.Fatal("Error unmarshalling JSON:", err)
 	}
-	fmt.Println(products)
-	component := Product(products[0])
+	var component templ.Component
+	if len(products) == 0 {
+		w.Header().Set("Content-Type", "text/plain")
+		_, err := w.Write([]byte{})
+		if err != nil {
+			log.Fatal("Error writing response:", err)
+		}
+		return
+	} else {
+		component = Product(products[0])
+	}
 	component.Render(r.Context(), w)
 	w.WriteHeader(http.StatusOK)
 }
