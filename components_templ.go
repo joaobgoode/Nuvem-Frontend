@@ -148,7 +148,7 @@ func NewProductForm() templ.Component {
 			templ_7745c5c3_Var4 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form id=\"product-form\" class=\"mx-auto w-50 pb-3\" hx-get=\"/new/\" hx-target=\"#product-form\" hx-swap=\"outerHTML\" hx-trigger=\"click from:#new-product-btn\"><div class=\"form-group pb-1\"><label for=\"name\">Name</label> <input type=\"text\" class=\"form-control\" id=\"name\" placeholder=\"Enter product name\" name=\"name\"></div><div class=\"form-group pb-1\"><label for=\"description\">Description</label> <input type=\"text\" class=\"form-control\" id=\"description\" placeholder=\"Enter product description\" name=\"description\"></div><div class=\"form-group pb-1\"><label for=\"price\">Price</label> <input type=\"number\" class=\"form-control\" id=\"price\" name=\"price\"></div><button hx-post=\"/new/\" hx-target=\"#products\" hx-swap=\"beforeend\" id=\"new-product-btn\" class=\"btn btn-primary\">Submit</button> <button hx-get=\"/search/\" hx-target=\"#product-form\" hx-swap=\"outerHTML\" id=\"search-btn\" class=\"btn btn-primary\">Search</button></form>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form id=\"product-form\" class=\"mx-auto w-50 pb-3\" hx-get=\"/new/\" hx-target=\"#product-form\" hx-swap=\"outerHTML\" hx-trigger=\"click from:#new-product-btn\"><div class=\"form-group pb-1\"><label for=\"name\">Name</label> <input type=\"text\" class=\"form-control\" id=\"name\" placeholder=\"Enter product name\" name=\"name\"></div><div class=\"form-group pb-1\"><label for=\"description\">Description</label> <input type=\"text\" class=\"form-control\" id=\"description\" placeholder=\"Enter product description\" name=\"description\"></div><div class=\"form-group pb-1\"><label for=\"price\">Price</label> <input type=\"number\" class=\"form-control\" id=\"price\" name=\"price\"></div><button hx-confirm=\"Are you sure?\" hx-post=\"/new/\" hx-target=\"#products\" hx-swap=\"beforeend\" id=\"new-product-btn\" class=\"btn btn-primary\">Submit</button> <button hx-get=\"/search/\" hx-target=\"#product-form\" hx-swap=\"outerHTML\" id=\"search-btn\" class=\"btn btn-primary\">Search</button></form>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -216,14 +216,14 @@ func EditProductForm(p ProductBody) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" name=\"price\"></div><button hx-post=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" name=\"price\"></div><button hx-confirm=\"Are you sure?\" hx-post=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var9 string
 		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("/edit/%d/", p.Id))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components.templ`, Line: 80, Col: 50}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components.templ`, Line: 80, Col: 77}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {
@@ -236,7 +236,7 @@ func EditProductForm(p ProductBody) templ.Component {
 		var templ_7745c5c3_Var10 string
 		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("#produto-%d", p.Id))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components.templ`, Line: 80, Col: 97}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components.templ`, Line: 80, Col: 124}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 		if templ_7745c5c3_Err != nil {
@@ -378,14 +378,14 @@ func Product(p ProductBody) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-target=\"#product-form\" hx-swap=\"outerHTML\" class=\"btn btn-info\">Edit</button></td><td><button hx-delete=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-target=\"#product-form\" hx-swap=\"outerHTML\" class=\"btn btn-info\">Edit</button></td><td><button hx-confirm=\"Are you sure?\" hx-delete=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var19 string
 		templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("/delete/%d/", p.Id))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components.templ`, Line: 106, Col: 55}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components.templ`, Line: 106, Col: 82}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
 		if templ_7745c5c3_Err != nil {
@@ -398,7 +398,7 @@ func Product(p ProductBody) templ.Component {
 		var templ_7745c5c3_Var20 string
 		templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("#produto-%d", p.Id))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components.templ`, Line: 106, Col: 102}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components.templ`, Line: 106, Col: 129}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var20))
 		if templ_7745c5c3_Err != nil {

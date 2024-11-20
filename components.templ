@@ -58,7 +58,7 @@ templ NewProductForm() {
 			<label for="price">Price</label>
 			<input type="number" class="form-control" id="price" name="price"/>
 		</div>
-		<button hx-post="/new/" hx-target="#products" hx-swap="beforeend" id="new-product-btn" class="btn btn-primary">Submit</button>
+		<button hx-confirm="Are you sure?" hx-post="/new/" hx-target="#products" hx-swap="beforeend" id="new-product-btn" class="btn btn-primary">Submit</button>
 		<button hx-get="/search/" hx-target="#product-form" hx-swap="outerHTML" id="search-btn" class="btn btn-primary">Search</button>
 	</form>
 }
@@ -77,7 +77,7 @@ templ EditProductForm(p ProductBody) {
 			<label for="price">Price</label>
 			<input type="number" class="form-control" id="price" value={ fmt.Sprintf("%f", p.Price) } name="price"/>
 		</div>
-		<button hx-post={ fmt.Sprintf("/edit/%d/", p.Id) } hx-target={ fmt.Sprintf("#produto-%d", p.Id) } hx-swap="outerHTML" class="form-btn btn btn-primary" id="edit-btn">Edit</button>
+		<button hx-confirm="Are you sure?" hx-post={ fmt.Sprintf("/edit/%d/", p.Id) } hx-target={ fmt.Sprintf("#produto-%d", p.Id) } hx-swap="outerHTML" class="form-btn btn btn-primary" id="edit-btn">Edit</button>
 		<button hx-get="/back/" hx-target="#product-list" hx-swap="outerHTML" id="back-btn" class="form-btn btn btn-primary">Cancel</button>
 	</form>
 }
@@ -103,7 +103,7 @@ templ Product(p ProductBody) {
 			<button hx-get={ fmt.Sprintf("/edit-product/%d/%s/d=%s/%f/", p.Id, p.Name, p.Description, p.Price) } hx-target="#product-form" hx-swap="outerHTML" class="btn btn-info">Edit</button>
 		</td>
 		<td>
-			<button hx-delete={ fmt.Sprintf("/delete/%d/", p.Id) } hx-target={ fmt.Sprintf("#produto-%d", p.Id) } class="btn btn-info">Delete</button>
+			<button hx-confirm="Are you sure?" hx-delete={ fmt.Sprintf("/delete/%d/", p.Id) } hx-target={ fmt.Sprintf("#produto-%d", p.Id) } class="btn btn-info">Delete</button>
 		</td>
 	</tr>
 }
