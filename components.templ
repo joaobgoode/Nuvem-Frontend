@@ -25,80 +25,85 @@ templ Content(products []ProductBody) {
 }
 
 templ ProductList(products []ProductBody) {
-	<div id="products">
-		for _, p := range products {
-			@Product(p)
-		}
-	</div>
+	<table id="product-list" class="table table-light w-75 mx-auto pt-3">
+		<thead>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">Name</th>
+				<th scope="col">Description</th>
+				<th scope="col">Price</th>
+				<th scope="col">Edit</th>
+				<th scope="col">Delete</th>
+			</tr>
+		</thead>
+		<tbody id="products">
+			for _, p := range products {
+				@Product(p)
+			}
+		</tbody>
+	</table>
 }
 
 templ NewProductForm() {
-	<form id="product-form" class="mx-auto w-50" hx-get="/new/" hx-target="#product-form" hx-swap="outerHTML" hx-trigger="click from:#new-product-btn">
-		<div class="form-group">
+	<form id="product-form" class="mx-auto w-50 pb-3" hx-get="/new/" hx-target="#product-form" hx-swap="outerHTML" hx-trigger="click from:#new-product-btn">
+		<div class="form-group pb-1">
 			<label for="name">Name</label>
 			<input type="text" class="form-control" id="name" placeholder="Enter product name" name="name"/>
 		</div>
-		<div class="form-group">
+		<div class="form-group pb-1">
 			<label for="description">Description</label>
 			<input type="text" class="form-control" id="description" placeholder="Enter product description" name="description"/>
 		</div>
-		<div class="form-group">
+		<div class="form-group pb-1">
 			<label for="price">Price</label>
 			<input type="number" class="form-control" id="price" name="price"/>
 		</div>
-		<button hx-post="/new/" hx-target="#products" hx-swap="afterend" id="new-product-btn" class="btn btn-primary">Submit</button>
+		<button hx-post="/new/" hx-target="#products" hx-swap="beforeend" id="new-product-btn" class="btn btn-primary">Submit</button>
 		<button hx-get="/search/" hx-target="#product-form" hx-swap="outerHTML" id="search-btn" class="btn btn-primary">Search</button>
 	</form>
 }
 
 templ EditProductForm(p ProductBody) {
-	<form id="product-form" class="mx-auto w-50" hx-get="/new/" hx-target="#product-form" hx-swap="outerHTML" hx-trigger="click from:.form-btn">
-		<div class="form-group">
+	<form id="product-form" class="mx-auto w-50 pb-3" hx-queue="last" hx-get="/new/" hx-target="#product-form" hx-swap="outerHTML" hx-trigger="click from:.form-btn">
+		<div class="form-group pb-1">
 			<label for="name">Name</label>
 			<input type="text" class="form-control" id="name" placeholder="Enter product name" value={ p.Name } name="name"/>
 		</div>
-		<div class="form-group">
+		<div class="form-group pb-1">
 			<label for="description">Description</label>
 			<input type="text" class="form-control" id="description" placeholder="Enter product description" value={ p.Description } name="description"/>
 		</div>
-		<div class="form-group">
+		<div class="form-group pb-1">
 			<label for="price">Price</label>
 			<input type="number" class="form-control" id="price" value={ fmt.Sprintf("%f", p.Price) } name="price"/>
 		</div>
 		<button hx-post={ fmt.Sprintf("/edit/%d/", p.Id) } hx-target={ fmt.Sprintf("#produto-%d", p.Id) } hx-swap="outerHTML" class="form-btn btn btn-primary" id="edit-btn">Edit</button>
-		<button hx-get="/back/" hx-target="#products" hx-swap="outerHTML" id="back-btn" class="form-btn btn btn-primary">Cancel</button>
+		<button hx-get="/back/" hx-target="#product-list" hx-swap="outerHTML" id="back-btn" class="form-btn btn btn-primary">Cancel</button>
 	</form>
 }
 
 templ SearchForm() {
-	<form id="product-form" class="mx-auto w-50" hx-get="/new/" hx-target="#product-form" hx-swap="outerHTML" hx-trigger="click from:#back-btn">
-		<div class="form-group">
-			<label for="id">Name</label>
+	<form id="product-form" class="mx-auto w-50 pb-3" hx-get="/new/" hx-target="#product-form" hx-swap="outerHTML" hx-trigger="click from:#back-btn">
+		<div class="form-group pb-1">
+			<label for="id">ID</label>
 			<input type="number" class="form-control" id="id" placeholder="Enter product id" name="id"/>
 		</div>
 		<button hx-post="/search/id/" hx-target="#products" hx-swap="innerHTML" id="search-btn" class="btn btn-primary">Search</button>
-		<button hx-get="/back/" hx-target="#products" hx-swap="outerHTML" id="back-btn" class="btn btn-primary">Cancel</button>
+		<button hx-get="/back/" hx-target="#product-list" hx-swap="outerHTML" id="back-btn" class="btn btn-primary">Cancel</button>
 	</form>
 }
 
 templ Product(p ProductBody) {
-	<div class="container" id={ fmt.Sprintf("produto-%d", p.Id) }>
-		<div class="row">
-			<div class="col-sm">
-				{ p.Name }
-			</div>
-			<div class="col-sm">
-				{ p.Description }
-			</div>
-			<div class="col-sm">
-				{ fmt.Sprintf("R$%.2f", p.Price) }
-			</div>
-			<div class="col-sm">
-				<button hx-get={ fmt.Sprintf("/edit-product/%d/%s/d=%s/%f/", p.Id, p.Name, p.Description, p.Price) } hx-target="#product-form" hx-swap="outerHTML">Edit</button>
-			</div>
-			<div class="col-sm">
-				<button hx-delete={ fmt.Sprintf("/delete/%d/", p.Id) } hx-target={ fmt.Sprintf("#produto-%d", p.Id) }>Delete</button>
-			</div>
-		</div>
-	</div>
+	<tr id={ fmt.Sprintf("produto-%d", p.Id) }>
+		<td>{ fmt.Sprintf("%d", p.Id) }</td>
+		<td>{ p.Name }</td>
+		<td>{ p.Description }</td>
+		<td>{ fmt.Sprintf("R$%.2f", p.Price) }</td>
+		<td>
+			<button hx-get={ fmt.Sprintf("/edit-product/%d/%s/d=%s/%f/", p.Id, p.Name, p.Description, p.Price) } hx-target="#product-form" hx-swap="outerHTML">Edit</button>
+		</td>
+		<td>
+			<button hx-delete={ fmt.Sprintf("/delete/%d/", p.Id) } hx-target={ fmt.Sprintf("#produto-%d", p.Id) }>Delete</button>
+		</td>
+	</tr>
 }
