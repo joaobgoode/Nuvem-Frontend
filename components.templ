@@ -17,7 +17,7 @@ templ Page(products []ProductBody) {
 }
 
 templ Content(products []ProductBody) {
-	<body>
+	<body class="bg-light">
 		<h1 class="mx-auto w-50">Product CRUD</h1>
 		@NewProductForm()
 		@ProductList(products)
@@ -32,8 +32,8 @@ templ ProductList(products []ProductBody) {
 				<th scope="col">Name</th>
 				<th scope="col">Description</th>
 				<th scope="col">Price</th>
-				<th scope="col">Edit</th>
-				<th scope="col">Delete</th>
+				<th scope="col"></th>
+				<th scope="col"></th>
 			</tr>
 		</thead>
 		<tbody id="products">
@@ -100,10 +100,10 @@ templ Product(p ProductBody) {
 		<td>{ p.Description }</td>
 		<td>{ fmt.Sprintf("R$%.2f", p.Price) }</td>
 		<td>
-			<button hx-get={ fmt.Sprintf("/edit-product/%d/%s/d=%s/%f/", p.Id, p.Name, p.Description, p.Price) } hx-target="#product-form" hx-swap="outerHTML">Edit</button>
+			<button hx-get={ fmt.Sprintf("/edit-product/%d/%s/d=%s/%f/", p.Id, p.Name, p.Description, p.Price) } hx-target="#product-form" hx-swap="outerHTML" class="btn btn-info">Edit</button>
 		</td>
 		<td>
-			<button hx-delete={ fmt.Sprintf("/delete/%d/", p.Id) } hx-target={ fmt.Sprintf("#produto-%d", p.Id) }>Delete</button>
+			<button hx-delete={ fmt.Sprintf("/delete/%d/", p.Id) } hx-target={ fmt.Sprintf("#produto-%d", p.Id) } class="btn btn-info">Delete</button>
 		</td>
 	</tr>
 }
