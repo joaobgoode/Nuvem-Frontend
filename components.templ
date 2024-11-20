@@ -18,7 +18,7 @@ templ Page(products []ProductBody) {
 
 templ Content(products []ProductBody) {
 	<body>
-		<h1>Product CRUD</h1>
+		<h1 class="mx-auto w-50">Product CRUD</h1>
 		@NewProductForm()
 		@ProductList(products)
 	</body>
@@ -33,7 +33,7 @@ templ ProductList(products []ProductBody) {
 }
 
 templ NewProductForm() {
-	<form id="product-form" hx-get="/new/" hx-target="#product-form" hx-swap="outerHTML" hx-trigger="click from:#new-product-btn">
+	<form id="product-form" class="mx-auto w-50" hx-get="/new/" hx-target="#product-form" hx-swap="outerHTML" hx-trigger="click from:#new-product-btn">
 		<div class="form-group">
 			<label for="name">Name</label>
 			<input type="text" class="form-control" id="name" placeholder="Enter product name" name="name"/>
@@ -52,7 +52,7 @@ templ NewProductForm() {
 }
 
 templ EditProductForm(p ProductBody) {
-	<form id="product-form" hx-get="/new/" hx-target="#product-form" hx-swap="outerHTML" hx-trigger="click from:#edit-btn">
+	<form id="product-form" class="mx-auto w-50" hx-get="/new/" hx-target="#product-form" hx-swap="outerHTML" hx-trigger="click from:.form-btn">
 		<div class="form-group">
 			<label for="name">Name</label>
 			<input type="text" class="form-control" id="name" placeholder="Enter product name" value={ p.Name } name="name"/>
@@ -65,13 +65,13 @@ templ EditProductForm(p ProductBody) {
 			<label for="price">Price</label>
 			<input type="number" class="form-control" id="price" value={ fmt.Sprintf("%f", p.Price) } name="price"/>
 		</div>
-		<button hx-post={ fmt.Sprintf("/edit/%d/", p.Id) } hx-target={ fmt.Sprintf("#produto-%d", p.Id) } hx-swap="outerHTML" class="btn btn-primary" id="edit-btn">Edit</button>
-		<button hx-get="/cancel" hx-target="#product-form" hx-swap="outerHTML" class="btn btn-primary">Cancel</button>
+		<button hx-post={ fmt.Sprintf("/edit/%d/", p.Id) } hx-target={ fmt.Sprintf("#produto-%d", p.Id) } hx-swap="outerHTML" class="form-btn btn btn-primary" id="edit-btn">Edit</button>
+		<button hx-get="/back/" hx-target="#products" hx-swap="outerHTML" id="back-btn" class="form-btn btn btn-primary">Cancel</button>
 	</form>
 }
 
 templ SearchForm() {
-	<form id="product-form" hx-get="/new/" hx-target="#product-form" hx-swap="outerHTML" hx-trigger="click from:#back-btn">
+	<form id="product-form" class="mx-auto w-50" hx-get="/new/" hx-target="#product-form" hx-swap="outerHTML" hx-trigger="click from:#back-btn">
 		<div class="form-group">
 			<label for="id">Name</label>
 			<input type="number" class="form-control" id="id" placeholder="Enter product id" name="id"/>

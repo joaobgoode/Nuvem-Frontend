@@ -68,7 +68,7 @@ func Content(products []ProductBody) templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<body><h1>Product CRUD</h1>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<body><h1 class=\"mx-auto w-50\">Product CRUD</h1>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -148,7 +148,7 @@ func NewProductForm() templ.Component {
 			templ_7745c5c3_Var4 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form id=\"product-form\" hx-get=\"/new/\" hx-target=\"#product-form\" hx-swap=\"outerHTML\" hx-trigger=\"click from:#new-product-btn\"><div class=\"form-group\"><label for=\"name\">Name</label> <input type=\"text\" class=\"form-control\" id=\"name\" placeholder=\"Enter product name\" name=\"name\"></div><div class=\"form-group\"><label for=\"description\">Description</label> <input type=\"text\" class=\"form-control\" id=\"description\" placeholder=\"Enter product description\" name=\"description\"></div><div class=\"form-group\"><label for=\"price\">Price</label> <input type=\"number\" class=\"form-control\" id=\"price\" name=\"price\"></div><button hx-post=\"/new/\" hx-target=\"#products\" hx-swap=\"afterend\" id=\"new-product-btn\" class=\"btn btn-primary\">Submit</button> <button hx-get=\"/search/\" hx-target=\"#product-form\" hx-swap=\"outerHTML\" id=\"search-btn\" class=\"btn btn-primary\">Search</button></form>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form id=\"product-form\" class=\"mx-auto w-50\" hx-get=\"/new/\" hx-target=\"#product-form\" hx-swap=\"outerHTML\" hx-trigger=\"click from:#new-product-btn\"><div class=\"form-group\"><label for=\"name\">Name</label> <input type=\"text\" class=\"form-control\" id=\"name\" placeholder=\"Enter product name\" name=\"name\"></div><div class=\"form-group\"><label for=\"description\">Description</label> <input type=\"text\" class=\"form-control\" id=\"description\" placeholder=\"Enter product description\" name=\"description\"></div><div class=\"form-group\"><label for=\"price\">Price</label> <input type=\"number\" class=\"form-control\" id=\"price\" name=\"price\"></div><button hx-post=\"/new/\" hx-target=\"#products\" hx-swap=\"afterend\" id=\"new-product-btn\" class=\"btn btn-primary\">Submit</button> <button hx-get=\"/search/\" hx-target=\"#product-form\" hx-swap=\"outerHTML\" id=\"search-btn\" class=\"btn btn-primary\">Search</button></form>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -177,7 +177,7 @@ func EditProductForm(p ProductBody) templ.Component {
 			templ_7745c5c3_Var5 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form id=\"product-form\" hx-get=\"/new/\" hx-target=\"#product-form\" hx-swap=\"outerHTML\" hx-trigger=\"click from:#edit-btn\"><div class=\"form-group\"><label for=\"name\">Name</label> <input type=\"text\" class=\"form-control\" id=\"name\" placeholder=\"Enter product name\" value=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form id=\"product-form\" class=\"mx-auto w-50\" hx-get=\"/new/\" hx-target=\"#product-form\" hx-swap=\"outerHTML\" hx-trigger=\"click from:.form-btn\"><div class=\"form-group\"><label for=\"name\">Name</label> <input type=\"text\" class=\"form-control\" id=\"name\" placeholder=\"Enter product name\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -242,7 +242,7 @@ func EditProductForm(p ProductBody) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-swap=\"outerHTML\" class=\"btn btn-primary\" id=\"edit-btn\">Edit</button> <button hx-get=\"/cancel\" hx-target=\"#product-form\" hx-swap=\"outerHTML\" class=\"btn btn-primary\">Cancel</button></form>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-swap=\"outerHTML\" class=\"form-btn btn btn-primary\" id=\"edit-btn\">Edit</button> <button hx-get=\"/back/\" hx-target=\"#products\" hx-swap=\"outerHTML\" id=\"back-btn\" class=\"form-btn btn btn-primary\">Cancel</button></form>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -271,7 +271,7 @@ func SearchForm() templ.Component {
 			templ_7745c5c3_Var11 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form id=\"product-form\" hx-get=\"/new/\" hx-target=\"#product-form\" hx-swap=\"outerHTML\" hx-trigger=\"click from:#back-btn\"><div class=\"form-group\"><label for=\"id\">Name</label> <input type=\"number\" class=\"form-control\" id=\"id\" placeholder=\"Enter product id\" name=\"id\"></div><button hx-post=\"/search/id/\" hx-target=\"#products\" hx-swap=\"innerHTML\" id=\"search-btn\" class=\"btn btn-primary\">Search</button> <button hx-get=\"/back/\" hx-target=\"#products\" hx-swap=\"outerHTML\" id=\"back-btn\" class=\"btn btn-primary\">Cancel</button></form>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form id=\"product-form\" class=\"mx-auto w-50\" hx-get=\"/new/\" hx-target=\"#product-form\" hx-swap=\"outerHTML\" hx-trigger=\"click from:#back-btn\"><div class=\"form-group\"><label for=\"id\">Name</label> <input type=\"number\" class=\"form-control\" id=\"id\" placeholder=\"Enter product id\" name=\"id\"></div><button hx-post=\"/search/id/\" hx-target=\"#products\" hx-swap=\"innerHTML\" id=\"search-btn\" class=\"btn btn-primary\">Search</button> <button hx-get=\"/back/\" hx-target=\"#products\" hx-swap=\"outerHTML\" id=\"back-btn\" class=\"btn btn-primary\">Cancel</button></form>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
